@@ -2,6 +2,7 @@ package com.nirmalbhetwal.androidfinalexam;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean isAuthenticated = authenticate(username, password);
 
         if (isAuthenticated) {
+            Intent intent = new Intent(MainActivity.this, DestinationDetails.class);
 
+            startActivity(intent);
         } else {
             Toast.makeText(MainActivity.this, "Please enter valid username or password", Toast.LENGTH_LONG).show();
         }
