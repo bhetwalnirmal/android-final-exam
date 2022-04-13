@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    >
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/linearLayout2"-->
+<!--    android:padding="20dp"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:orientation="horizontal"-->
+<!--    android:weightSum="1"-->
+<!--    android:layout_height="wrap_content">-->
+
+
+    <ImageView
+        android:layout_weight="0.33"
+        android:id="@+id/placeImage"
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+    <TextView
+        android:id="@+id/placeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:layout_weight="0.33" />
+
+    <TextView
+        android:id="@+id/visitPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="58dp"
+        android:layout_weight="0.33"
+        android:text="TextView" />
+</LinearLayout>

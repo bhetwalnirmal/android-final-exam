@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class DestinationDetails extends AppCompatActivity {
     ArrayList<Country> countryList = new ArrayList<>();
     TextView textViewCountryCapital;
     ImageView imageViewCountryFlag;
+    ListView placesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,9 @@ public class DestinationDetails extends AppCompatActivity {
         spinnerCountryList = (Spinner) findViewById(R.id.spinnerCountryList);
         ArrayAdapter countryAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, countryList);
         spinnerCountryList.setAdapter(countryAdapter);
-
+        // listview
+        placesList = (ListView) findViewById(R.id.listViewPlaces);
+        placesList.setAdapter(new PlaceAdapter(this, countryList.get(0).getPlaces()));
         spinnerCountryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
