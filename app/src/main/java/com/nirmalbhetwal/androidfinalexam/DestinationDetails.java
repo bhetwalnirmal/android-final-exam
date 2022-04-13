@@ -3,6 +3,8 @@ package com.nirmalbhetwal.androidfinalexam;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -66,27 +68,27 @@ public class DestinationDetails extends AppCompatActivity {
         placesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int numberOfVisitors = 0;
                 Place place = selectedCountry.getPlaces().get(i);
                 selectedPlace = place;
-                if (selectedCountry != null) {
-                    try {
-                        numberOfVisitors = Integer.parseInt(editTextNumberOfVisitors.getText().toString().trim());
-                    } catch (Exception e) {
-                        numberOfVisitors = 0;
-                    }
-                }
-                double total = 0;
-                if (selectedPlace != null) {
-                    total = numberOfVisitors *  selectedPlace.getPriceOfVisit();
-                }
 
-                if (numberOfVisitors > 15) {
-                    total *= 0.95; // give 5% discount;
-                    discount.setText(String.format("$ %.2f", total * 0.05));
-                }
+                updateTotal();
+            }
+        });
 
-                tvTotal.setText(String.format("$ %.2f", total));
+        editTextNumberOfVisitors.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                updateTotal();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
@@ -121,5 +123,28 @@ public class DestinationDetails extends AppCompatActivity {
         int[] hydeParkImages = {R.drawable.england};
         englandPlaceOfInterest.add(new Place("Westminster Abbey", 15, hydeParkImages));
         countryList.add(england);
+    }
+
+    void updateTotal () {
+        int numberOfVisitors = 0;
+
+        if (selectedCountry != null) {
+            try {
+                numberOfVisitors = Integer.parseInt(editTextNumberOfVisitors.getText().toString().trim());
+            } catch (Exception e) {
+                numberOfVisitors = 0;
+            }
+        }
+        double total = 0;
+        if (selectedPlace != null) {
+            total = numberOfVisitors *  selectedPlace.getPriceOfVisit();
+        }
+
+        if (numberOfVisitors > 15) {
+            total *= 0.95; // give 5% discount;
+            discount.setText(String.format("$ %.2f", total * 0.05));
+        }
+
+        tvTotal.setText(String.format("$ %.2f", total));
     }
 }
