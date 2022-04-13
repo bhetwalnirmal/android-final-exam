@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -19,9 +20,12 @@ import java.util.ArrayList;
 public class DestinationDetails extends AppCompatActivity {
     Spinner spinnerCountryList;
     ArrayList<Country> countryList = new ArrayList<>();
-    TextView textViewCountryCapital;
+    TextView textViewCountryCapital, discount, tvTotal;
     ImageView imageViewCountryFlag;
     ListView placesList;
+    Country selectedCountry = null;
+    Place selectedPlace = null;
+    EditText editTextNumberOfVisitors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +34,24 @@ public class DestinationDetails extends AppCompatActivity {
 
         fillData();
         textViewCountryCapital = (TextView) findViewById(R.id.textViewCountryCapital);
+        discount = (TextView) findViewById(R.id.tvDiscount);
+        tvTotal = (TextView) findViewById(R.id.tvTotal);
+        editTextNumberOfVisitors = (EditText) findViewById(R.id.editTextNumberOfVisitors);
         imageViewCountryFlag = (ImageView) findViewById(R.id.imageViewCountryFlag);
         // initialize the spinner
         spinnerCountryList = (Spinner) findViewById(R.id.spinnerCountryList);
         ArrayAdapter countryAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, countryList);
         spinnerCountryList.setAdapter(countryAdapter);
+        selectedCountry = countryList.get(0);
         // listview
         placesList = (ListView) findViewById(R.id.listViewPlaces);
         placesList.setAdapter(new PlaceAdapter(this, countryList.get(0).getPlaces()));
+
         spinnerCountryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Country country = countryList.get(i);
+                selectedCountry = country;
                 textViewCountryCapital.setText(country.getCapital());
                 imageViewCountryFlag.setImageResource(country.getFlagId());
                 placesList.setAdapter(new PlaceAdapter(DestinationDetails.this, country.getPlaces()));
@@ -52,15 +62,42 @@ public class DestinationDetails extends AppCompatActivity {
 
             }
         });
+
+        placesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int numberOfVisitors = 0;
+                Place place = selectedCountry.getPlaces().get(i);
+                selectedPlace = place;
+                if (selectedCountry != null) {
+                    try {
+                        numberOfVisitors = Integer.parseInt(editTextNumberOfVisitors.getText().toString().trim());
+                    } catch (Exception e) {
+                        numberOfVisitors = 0;
+                    }
+                }
+                double total = 0;
+                if (selectedPlace != null) {
+                    total = numberOfVisitors *  selectedPlace.getPriceOfVisit();
+                }
+
+                if (numberOfVisitors > 15) {
+                    total *= 0.95; // give 5% discount;
+                    discount.setText(String.format("$ %.2f", total * 0.05));
+                }
+
+                tvTotal.setText(String.format("$ %.2f", total));
+            }
+        });
     }
 
     void fillData () {
         ArrayList<Place> canadaPlaceOfInterest = new ArrayList<>();
-        int[] niagaraImages = {R.drawable.canada};
+        int[] niagaraImages = {R.drawable.niagra_falls};
         canadaPlaceOfInterest.add(new Place("Niagara Falls", 100, niagaraImages));
-        int[] cnTowerImages = {R.drawable.canada};
+        int[] cnTowerImages = {R.drawable.cn_tower};
         canadaPlaceOfInterest.add(new Place("CN Tower", 30, cnTowerImages));
-        int[] buchartImages = {R.drawable.canada};
+        int[] buchartImages = {R.drawable.buchart_gardens};
         canadaPlaceOfInterest.add(new Place("The Buchart Gardens", 30, buchartImages));
         Country canada = new Country("Canada", "Ottawa", R.drawable.canada, canadaPlaceOfInterest);
         countryList.add(canada);
