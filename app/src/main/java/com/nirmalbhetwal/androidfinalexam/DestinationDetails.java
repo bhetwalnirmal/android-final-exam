@@ -102,26 +102,28 @@ public class DestinationDetails extends AppCompatActivity {
         int[] buchartImages = {R.drawable.buchart_gardens};
         canadaPlaceOfInterest.add(new Place("The Buchart Gardens", 30, buchartImages));
         Country canada = new Country("Canada", "Ottawa", R.drawable.canada, canadaPlaceOfInterest);
+        int[] notredame = {R.drawable.notre_dame};
+        canadaPlaceOfInterest.add(new Place("The Notre-Dame Brasilica", 30, notredame));
         countryList.add(canada);
 
         ArrayList<Place> usaPlaceOfInterest = new ArrayList<>();
-        int[] statueOfLibertyImages = {R.drawable.usa};
+        int[] statueOfLibertyImages = {R.drawable.statue_of_liberty};
         usaPlaceOfInterest.add(new Place("The Statue of Liberty", 90, statueOfLibertyImages));
-        int[] whiteHouseImages = {R.drawable.usa};
-        usaPlaceOfInterest.add(new Place("The Statue of Liberty", 90, whiteHouseImages));
-        int[] timeSquareImages = {R.drawable.usa};
-        usaPlaceOfInterest.add(new Place("The Statue of Liberty", 90, timeSquareImages));
+        int[] whiteHouseImages = {R.drawable.whitehouse};
+        usaPlaceOfInterest.add(new Place("White House", 90, whiteHouseImages));
+        int[] timeSquareImages = {R.drawable.time_square};
+        usaPlaceOfInterest.add(new Place("Time Square", 90, timeSquareImages));
         Country usa = new Country("USA", "Washington DC", R.drawable.usa, usaPlaceOfInterest);
         countryList.add(usa);
 
         ArrayList<Place> englandPlaceOfInterest = new ArrayList<>();
         Country england = new Country("England", "London", R.drawable.england, englandPlaceOfInterest);
-        int[] bigBenImages = {R.drawable.england};
+        int[] bigBenImages = {R.drawable.big_ben};
         englandPlaceOfInterest.add(new Place("Big Ben", 30, bigBenImages));
-        int[] westMinisterImages = {R.drawable.england};
+        int[] westMinisterImages = {R.drawable.westminister};
         englandPlaceOfInterest.add(new Place("Westminster Abbey", 25, westMinisterImages));
-        int[] hydeParkImages = {R.drawable.england};
-        englandPlaceOfInterest.add(new Place("Westminster Abbey", 15, hydeParkImages));
+        int[] hydeParkImages = {R.drawable.hyde_park};
+        englandPlaceOfInterest.add(new Place("Hyde Park", 15, hydeParkImages));
         countryList.add(england);
     }
 
@@ -143,6 +145,8 @@ public class DestinationDetails extends AppCompatActivity {
         if (numberOfVisitors > 15) {
             total *= 0.95; // give 5% discount;
             discount.setText(String.format("$ %.2f", total * 0.05));
+        } else {
+            discount.setText("$ 0.00");
         }
 
         tvTotal.setText(String.format("$ %.2f", total));
