@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etUsername, etPassword;
     Button loginButton;
+    final String validUsername = "user1";
+    final String validPassword = "password1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        
+        String username = etUsername.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        boolean isAuthenticated = authenticate(username, password);
+
+        if (isAuthenticated) {
+
+        } else {
+            Toast.makeText(MainActivity.this, "Please enter valid username or password", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean authenticate (String username, String password) {
+        if (username.equals(validUsername) && password.equals(validPassword)) {
+            return true;
+        }
+
+        return false;
     }
 }
