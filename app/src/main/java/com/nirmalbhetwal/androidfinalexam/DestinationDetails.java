@@ -44,6 +44,7 @@ public class DestinationDetails extends AppCompatActivity {
                 Country country = countryList.get(i);
                 textViewCountryCapital.setText(country.getCapital());
                 imageViewCountryFlag.setImageResource(country.getFlagId());
+                placesList.setAdapter(new PlaceAdapter(DestinationDetails.this, country.getPlaces()));
             }
 
             @Override
