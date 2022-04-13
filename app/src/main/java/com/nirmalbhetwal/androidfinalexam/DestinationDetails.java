@@ -3,8 +3,12 @@ package com.nirmalbhetwal.androidfinalexam;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.nirmalbhetwal.androidfinalexam.Models.Country;
 import com.nirmalbhetwal.androidfinalexam.Models.Place;
@@ -14,16 +18,35 @@ import java.util.ArrayList;
 public class DestinationDetails extends AppCompatActivity {
     Spinner spinnerCountryList;
     ArrayList<Country> countryList = new ArrayList<>();
+    TextView textViewCountryCapital;
+    ImageView imageViewCountryFlag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_destination_details);
 
         fillData();
+        textViewCountryCapital = (TextView) findViewById(R.id.textViewCountryCapital);
+        imageViewCountryFlag = (ImageView) findViewById(R.id.imageViewCountryFlag);
         // initialize the spinner
         spinnerCountryList = (Spinner) findViewById(R.id.spinnerCountryList);
         ArrayAdapter countryAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, countryList);
         spinnerCountryList.setAdapter(countryAdapter);
+
+        spinnerCountryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Country country = countryList.get(i);
+                textViewCountryCapital.setText(country.getCapital());
+                imageViewCountryFlag.setImageResource(country.getFlagId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     void fillData () {
